@@ -10,6 +10,15 @@
     state: absent
   tags: mariadb
 
+- name: Remove root host
+  mysql_user:
+    name: 'root'
+    host: '{{ ansible_fqdn }}'
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    state: absent
+  tags: mariadb
+
 - name: Create the users
   mysql_user:
     name: "{{ item.name }}"
