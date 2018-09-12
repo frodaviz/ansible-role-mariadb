@@ -70,6 +70,16 @@ mariadb_innodb_log_file_size: '48M'
 mariadb_innodb_log_files_in_group: 2
 mariadb_innodb_strict_mode: 'ON'
 
+# Gssapi Module
+
+mariadb_gssapi: false
+mariadb_gssapi_keytab_path: '' #/etc/mariadb/mariadb.keytab
+mariadb_gssapi_principal_name: '' #mariadb/{{ inventory_hostname }}@QUENTRAL.IT
+
+# Encryption
+
+mariadb_encryption: false
+
 # Custom settings
 
 mariadb_custom_cnf: {}

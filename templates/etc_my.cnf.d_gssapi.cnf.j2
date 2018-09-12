@@ -1,0 +1,14 @@
+# Mariadb network settings
+#
+# {{ ansible_managed }}
+
+[mariadb]
+plugin-load-add                 = auth_gssapi.so
+
+[mysqld]
+{% if mariadb_gssapi_keytab_path|length != 0 %}
+gssapi-keytab-path              = {{ mariadb_gssapi_keytab_path }}
+{% endif %}
+{% if mariadb_gssapi_principal_name|length != 0 %}
+gssapi-principal-name           = {{ mariadb_gssapi_principal_name }}
+{% endif %}

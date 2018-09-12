@@ -16,3 +16,35 @@
     state: installed
   with_items: "{{ mariadb_packages }}"
   tags: mariadb
+
+- name: Install extra packages
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ mariadb_extra_packages }}"
+  when: 
+    - mariadb_gssapi == true
+  tags: mariadb
+
+- name: Check log directories
+  file:
+    path: '/var/log/mysql'
+    state: directory
+    mode: u=rwX,g=rX,o=rX  # 0755
+    owner: mysql
+    group: mysql
+
+- name: Check etc/mariadb files permission
+  file:
+    dest: '/etc/mariadb'
+    owner: mysql
+    group: mysql
+    mode: u=rw,g=,o=  # 0600
+    recurse: true
+
+- name: Check etc/mariadb correct
+  file:
+    dest: '/etc/mariadb'
+    owner: mysql
+    group: mysql
+    mode: u=rwX,g=rX,o=rX  # 0755

@@ -15,6 +15,23 @@
   notify: restart mariadb
   tags: mariadb
 
+- name: Install gssapi config file
+  template:
+    src: etc_my.cnf.d_gssapi.cnf.j2
+    dest: "{{ mariadb_config_gssapi }}"
+  notify: restart mariadb
+  when: mariadb_gssapi == true
+  tags: mariadb
+
+- name: Install encryption config file
+  template:
+    src: etc_my.cnf.d_encryption.cnf.j2
+    dest: "{{ mariadb_config_encryption }}"
+  notify: restart mariadb
+  when: mariadb_encryption == true
+  tags: mariadb
+
+
 - name: Install custom config file
   template:
     src: etc_my.cnf.d_custom.cnf.j2
@@ -22,6 +39,11 @@
   when: mariadb_custom_cnf|length != 0
   notify: restart mariadb
   tags: mariadb
+
+- name: Install client root file
+  template:
+    src: root_my.cnf.d_client.cnf.j2
+    dest: ~/.my.cnf
 
 - name: Configure swappiness
   sysctl:
